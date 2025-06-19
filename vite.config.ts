@@ -31,5 +31,21 @@ export default defineConfig({
 				}
 			}
 		]
-	}
+	},
+	server:{
+		open: true,
+		port: 5273,
+		host:'0.0.0.0',
+		proxy:{
+			'/api': {
+				target: 'http://localhost:9163', // 后端地址
+				changeOrigin: true,
+				rewrite: path => path.replace(/^\/api/, '/api'),
+			},
+			"/api/ws":{
+				target: "ws://localhost:9163",
+				ws: true
+			}
+		},
+	},
 });
